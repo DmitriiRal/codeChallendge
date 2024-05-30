@@ -1,0 +1,1 @@
+case class Product(name: String, price: Int)
