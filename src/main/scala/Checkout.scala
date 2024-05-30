@@ -3,23 +3,6 @@ val b: Product = Product("B", 35)
 val c: Product = Product("C", 20)
 val d: Product = Product("D", 10)
 
-val prices: Deals = WorkerAPI.deals
-
-class Deals(deals: Map[Product, List[(Int, Int)]] = Map()) {
-  def addDeal(product: Product, buyAmount: Int, pay: Int): Deals =
-    val update = deals.updatedWith(product) {
-        case Some(value) =>
-          val list = (buyAmount, pay) :: value
-          val listSorted = list.sortBy((buy, pay) => buy).reverse
-          Some(listSorted)
-        case None =>
-          Some(List((buyAmount, pay)))
-      }
-    new Deals(update)
-
-  def getDeals: Map[Product, List[(Int, Int)]] = deals
-}
-
 class Checkout(deals: Deals, cart: Map[Product, Int] = Map()) {
   def scan(product: Product): Checkout = {
     val addItem = cart.updatedWith(product) {
@@ -55,5 +38,4 @@ class Checkout(deals: Deals, cart: Map[Product, Int] = Map()) {
 
     }.sum
   }
-
 }
